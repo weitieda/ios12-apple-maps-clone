@@ -11,6 +11,7 @@
 		83420736220D3616008104AF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83420735220D3616008104AF /* ViewController.swift */; };
 		8342073B220D3619008104AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8342073A220D3619008104AF /* Assets.xcassets */; };
 		8342073E220D3619008104AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8342073C220D3619008104AF /* LaunchScreen.storyboard */; };
+		83420746220D3733008104AF /* Extention+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83420745220D3733008104AF /* Extention+UIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		8342073A220D3619008104AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8342073D220D3619008104AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8342073F220D3619008104AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83420745220D3733008104AF /* Extention+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extention+UIView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,13 +54,54 @@
 		83420732220D3616008104AF /* MapClone */ = {
 			isa = PBXGroup;
 			children = (
-				83420733220D3616008104AF /* AppDelegate.swift */,
-				83420735220D3616008104AF /* ViewController.swift */,
-				8342073A220D3619008104AF /* Assets.xcassets */,
-				8342073C220D3619008104AF /* LaunchScreen.storyboard */,
-				8342073F220D3619008104AF /* Info.plist */,
+				8342074B220D37F6008104AF /* Model */,
+				8342074A220D37E2008104AF /* View */,
+				83420747220D37C8008104AF /* Controller */,
+				8342074C220D380D008104AF /* Extention */,
+				8342074E220D381F008104AF /* SupportingFiles */,
 			);
 			path = MapClone;
+			sourceTree = "<group>";
+		};
+		83420747220D37C8008104AF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				83420735220D3616008104AF /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8342074A220D37E2008104AF /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8342074B220D37F6008104AF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8342074C220D380D008104AF /* Extention */ = {
+			isa = PBXGroup;
+			children = (
+				83420745220D3733008104AF /* Extention+UIView.swift */,
+			);
+			path = Extention;
+			sourceTree = "<group>";
+		};
+		8342074E220D381F008104AF /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				8342073C220D3619008104AF /* LaunchScreen.storyboard */,
+				8342073A220D3619008104AF /* Assets.xcassets */,
+				8342073F220D3619008104AF /* Info.plist */,
+				83420733220D3616008104AF /* AppDelegate.swift */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +176,7 @@
 			files = (
 				83420736220D3616008104AF /* ViewController.swift in Sources */,
 				83420734220D3616008104AF /* AppDelegate.swift in Sources */,
+				83420746220D3733008104AF /* Extention+UIView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +316,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7V8KD896B9;
-				INFOPLIST_FILE = MapClone/Info.plist;
+				INFOPLIST_FILE = MapClone/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -290,7 +334,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7V8KD896B9;
-				INFOPLIST_FILE = MapClone/Info.plist;
+				INFOPLIST_FILE = MapClone/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
