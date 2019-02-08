@@ -1,8 +1,24 @@
 import UIKit
 
 extension UIColor {
-    static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
-        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
+    
+    static func mainPink() -> UIColor {
+        return UIColor.rgb(red: 221, green: 94, blue: 86)
+    }
+    
+    static func mainBlue() -> UIColor {
+        return UIColor.rgb(red: 55, green: 120, blue: 250)
+    }
+    
+    static func directionsGreen() -> UIColor {
+        return UIColor.rgb(red: 76, green: 217, blue: 100)
+    }
+    
+}
+
+extension UIColor {
+    static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat = 1) -> UIColor {
+        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: alpha)
     }
 }
 
@@ -83,6 +99,16 @@ extension UIView {
         if size.height != 0 {
             heightAnchor.constraint(equalToConstant: size.height).isActive = true
         }
+    }
+    
+    func centerX(in view: UIView) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    func centerY(in view: UIView) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
 }
