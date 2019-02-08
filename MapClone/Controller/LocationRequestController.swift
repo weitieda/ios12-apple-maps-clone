@@ -51,6 +51,7 @@ class LocationRequestController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureViewComponents()
     }
     

@@ -31,16 +31,29 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         view.backgroundColor = .white
         
-        locationManager.delegate = self
-        
         setupMapView()
         enableLocationServices()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        centerMapOnUserLocation(shouldLoadAnnotations: true)
     }
     
     func setupMapView() {
         mapView.delegate = self
         view.addSubview(mapView)
         mapView.fillSuperview()
+    }
+    
+    func centerMapOnUserLocation(shouldLoadAnnotations: Bool) {
+        guard let coordinates = locationManager.location?.coordinate else { return }
+        let coordinateRegion = MKCoordinateRegion(center: coordinates, latitudinalMeters: 2000, longitudinalMeters: 2000)
+        mapView.setRegion(coordinateRegion, animated: true)
+        
+//        if shouldLoadAnnotations {
+//            loadAnnotations(withSearchQuery: "Coffee Shops")
+//        }
     }
     
 }
