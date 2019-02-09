@@ -74,6 +74,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     func setupSlider() {
         view.addSubview(slider)
+        slider.delegate = self
         slider.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: view.frame.height - 80, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: view.frame.height))
         
         view.addSubview(compassButton)
@@ -131,6 +132,31 @@ extension MapViewController: CLLocationManagerDelegate {
             print("Location auth status is AUTHORIZED WHEN IN USE")
         }
     }
+}
+
+// MARK: - SliderDelegate
+
+extension MapViewController: SliderDelegate {
+    func animateTemperatureLabel(targetPosotion: CGFloat, targetHeight: SliderHeight) {
+        let y = targetPosotion - self.temperatureLabel.frame.height - 8
+        
+        switch targetHeight {
+        case .low:
+            temperatureLabel.isHidden = false
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+                self.temperatureLabel.frame.origin.y = y
+            })
+        case .medium:
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+                self.temperatureLabel.frame.origin.y = y
+            })
+            self.temperatureLabel.isHidden = false
+        case .high:
+            temperatureLabel.isHidden = true
+            self.temperatureLabel.frame.origin.y = y
+        }
+    }
+    
 }
 
 

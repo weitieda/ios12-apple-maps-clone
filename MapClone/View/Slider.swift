@@ -8,15 +8,26 @@
 
 import UIKit
 
+protocol SliderDelegate {
+    func animateTemperatureLabel(targetPosotion: CGFloat, targetHeight: SliderHeight)
+}
+
+enum SliderHeight {
+    case low
+    case medium
+    case high
+}
+
 class Slider: UIView {
     
-    enum SliderHeight {
-        case low
-        case medium
-        case high
-    }
+    lazy var highPosition: CGFloat = 60
+    lazy var mediumPosition = frame.height / 5 * 3
+    lazy var lowPosition = frame.height - 80
+    
+    var delegate: SliderDelegate?
     
     var currentSliderHeight: SliderHeight = .low
+    
     
     let indicatorView: UIView = {
         let view = UIView()
@@ -95,27 +106,34 @@ class Slider: UIView {
     @objc func handleSwipe(gesture: UISwipeGestureRecognizer){
         if gesture.direction == .up {
             if currentSliderHeight == .low {
-                animateSlider(targetPosition: frame.height / 5 * 3) { (_) in
+                
+                
+                delegate?.animateTemperatureLabel(targetPosotion: mediumPosition, targetHeight: .medium)
+                
+                animateSlider(targetPosition: mediumPosition) { (_) in
                     self.currentSliderHeight = .medium
                 }
             }
             
             if currentSliderHeight == .medium {
-                animateSlider(targetPosition: 60) { (_) in
+                delegate?.animateTemperatureLabel(targetPosotion: highPosition, targetHeight: .high)
+                animateSlider(targetPosition: highPosition) { (_) in
                     self.currentSliderHeight = .high
                 }
             }
             
         } else if gesture.direction == .down {
             if currentSliderHeight == .medium {
-                animateSlider(targetPosition: frame.height - 80) { (_) in
+                delegate?.animateTemperatureLabel(targetPosotion: lowPosition, targetHeight: .low)
+                animateSlider(targetPosition: lowPosition) { (_) in
                     self.currentSliderHeight = .low
                 }
             }
             if currentSliderHeight == .high {
                 self.searchBar.endEditing(true)
                 self.searchBar.showsCancelButton = false
-                animateSlider(targetPosition: frame.height / 5 * 3) { (_) in
+                delegate?.animateTemperatureLabel(targetPosotion: mediumPosition, targetHeight: .medium)
+                animateSlider(targetPosition: mediumPosition) { (_) in
                     self.currentSliderHeight = .medium
                 }
             }
@@ -148,6 +166,7 @@ extension Slider: UISearchBarDelegate {
         animateSlider(targetPosition: 60) { (_) in
             self.currentSliderHeight = .high
         }
+        delegate?.animateTemperatureLabel(targetPosotion: highPosition, targetHeight: .high)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -157,5 +176,6 @@ extension Slider: UISearchBarDelegate {
         animateSlider(targetPosition: frame.height / 5 * 3) { (_) in
             self.currentSliderHeight = .medium
         }
+        delegate?.animateTemperatureLabel(targetPosotion: mediumPosition, targetHeight: .medium)
     }
 }
