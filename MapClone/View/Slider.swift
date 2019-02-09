@@ -85,7 +85,7 @@ class Slider: UIView {
         addSubview(searchBar)
         searchBar.anchor(top: indicatorView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 8, bottom: 0, right: 8), size: .init(width: 0, height: 50))
         if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
-//            textfield.textColor = UIColor.blue
+            textfield.textColor = UIColor.black
             textfield.backgroundColor = UIColor.init(white: 0.3, alpha: 0.2)
         }
         
