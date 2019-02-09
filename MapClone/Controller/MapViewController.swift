@@ -16,15 +16,35 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         let mv = MKMapView()
         mv.showsUserLocation = true
         mv.userTrackingMode = .follow
+        mv.showsCompass = false
         return mv
+    }()
+    
+    lazy var compassButton: MKCompassButton = {
+        let cb = MKCompassButton(mapView: mapView)
+        cb.compassVisibility = .adaptive
+        return cb
     }()
     
     let locationManager: CLLocationManager = {
        let lm = CLLocationManager()
-        
        return lm
     }()
     
+    let slider = Slider()
+    
+    let centerMapButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "location-arrow-flat").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleCenterLocation), for: .touchUpInside)
+        return button
+    }()
+    
+    let temperatureLabel: UILabel = {
+        let lb = UILabel()
+        lb.backgroundColor = .red
+        return lb
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +53,36 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         setupMapView()
         enableLocationServices()
+        setupCenterButton()
+        setupSlider()
+        setupTemperatureLabel()
+    }
+    
+    func setupTemperatureLabel() {
+        view.addSubview(temperatureLabel)
+        temperatureLabel.anchor(top: nil, leading: nil, bottom: slider.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 8, right: 8), size: .init(width: 50, height: 20))
+    }
+    
+    func setupCenterButton() {
+        view.addSubview(centerMapButton)
+        centerMapButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 8, left: 0, bottom: 0, right: 16), size: .init(width: 35, height: 35))
+    }
+    
+    @objc func handleCenterLocation() {
+        centerMapOnUserLocation(shouldLoadAnnotations: true)
+    }
+    
+    func setupSlider() {
+        view.addSubview(slider)
+        slider.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: view.frame.height - 80, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: view.frame.height))
+        
+        view.addSubview(compassButton)
+        compassButton.anchor(top: centerMapButton.bottomAnchor, leading: nil, bottom: nil, trailing: centerMapButton.trailingAnchor, padding: .init(top: 8, left: 0, bottom: 0, right: 0))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         centerMapOnUserLocation(shouldLoadAnnotations: true)
     }
     

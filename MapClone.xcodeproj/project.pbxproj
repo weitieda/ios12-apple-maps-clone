@@ -13,6 +13,8 @@
 		8342073E220D3619008104AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8342073C220D3619008104AF /* LaunchScreen.storyboard */; };
 		83420746220D3733008104AF /* Extention+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83420745220D3733008104AF /* Extention+UIView.swift */; };
 		83420750220D3D89008104AF /* LocationRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342074F220D3D89008104AF /* LocationRequestController.swift */; };
+		83420752220E6E53008104AF /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83420751220E6E53008104AF /* Slider.swift */; };
+		83420754220E7534008104AF /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83420753220E7534008104AF /* SearchCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		8342073F220D3619008104AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83420745220D3733008104AF /* Extention+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extention+UIView.swift"; sourceTree = "<group>"; };
 		8342074F220D3D89008104AF /* LocationRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestController.swift; sourceTree = "<group>"; };
+		83420751220E6E53008104AF /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
+		83420753220E7534008104AF /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,8 @@
 		8342074A220D37E2008104AF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				83420751220E6E53008104AF /* Slider.swift */,
+				83420753220E7534008104AF /* SearchCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -178,9 +184,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				83420750220D3D89008104AF /* LocationRequestController.swift in Sources */,
+				83420754220E7534008104AF /* SearchCell.swift in Sources */,
 				83420736220D3616008104AF /* MapViewController.swift in Sources */,
 				83420734220D3616008104AF /* AppDelegate.swift in Sources */,
 				83420746220D3733008104AF /* Extention+UIView.swift in Sources */,
+				83420752220E6E53008104AF /* Slider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
