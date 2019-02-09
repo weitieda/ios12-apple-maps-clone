@@ -10,6 +10,7 @@ import UIKit
 
 protocol SliderDelegate {
     func animateTemperatureLabel(targetPosotion: CGFloat, targetHeight: SliderHeight)
+    func handleSearch(by text: String)
 }
 
 enum SliderHeight {
@@ -161,6 +162,12 @@ extension Slider: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension Slider: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text else { return }
+        delegate?.handleSearch(by: text)
+    }
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
         animateSlider(targetPosition: 60) { (_) in

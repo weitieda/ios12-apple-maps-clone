@@ -103,6 +103,23 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 //        }
     }
     
+    func searchBy(naturalLanguageQuery: String, region: MKCoordinateRegion, coordinates: CLLocationCoordinate2D, completion: @escaping (_ response: MKLocalSearch.Response?, _ error: NSError?) -> ()) {
+        
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = naturalLanguageQuery
+        request.region = region
+        
+        let search = MKLocalSearch(request: request)
+        search.start { (response, error) in
+            
+            guard let response = response else {
+                completion(nil, error! as NSError)
+                return
+            }
+            
+            completion(response, nil)
+        }
+    }
 }
 
 // MARK: - CLLocationManagerDelegate
@@ -137,6 +154,20 @@ extension MapViewController: CLLocationManagerDelegate {
 // MARK: - SliderDelegate
 
 extension MapViewController: SliderDelegate {
+    func handleSearch(by text: String) {
+        guard let coordinate = locationManager.location?.coordinate else { return }
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
+        
+        searchBy(naturalLanguageQuery: text, region: region, coordinates: coordinate) { (response, error) in
+            
+            guard let response = response else { return }
+            
+            response.mapItems.forEach {print($0)}
+            
+//            self.searchInputView.searchResults = response.mapItems
+        }
+    }
+    
     func animateTemperatureLabel(targetPosotion: CGFloat, targetHeight: SliderHeight) {
         let y = targetPosotion - self.temperatureLabel.frame.height - 8
         
