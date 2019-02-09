@@ -69,7 +69,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @objc func handleCenterLocation() {
-        centerMapOnUserLocation(shouldLoadAnnotations: true)
+        centerMapOnUserLocation()
     }
     
     func setupSlider() {
@@ -84,7 +84,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        centerMapOnUserLocation(shouldLoadAnnotations: true)
+        centerMapOnUserLocation()
     }
     
     func setupMapView() {
@@ -93,14 +93,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.fillSuperview()
     }
     
-    func centerMapOnUserLocation(shouldLoadAnnotations: Bool) {
+    func centerMapOnUserLocation() {
         guard let coordinates = locationManager.location?.coordinate else { return }
         let coordinateRegion = MKCoordinateRegion(center: coordinates, latitudinalMeters: 2000, longitudinalMeters: 2000)
         mapView.setRegion(coordinateRegion, animated: true)
-        
-//        if shouldLoadAnnotations {
-//            loadAnnotations(withSearchQuery: "Coffee Shops")
-//        }
+    }
+    
+    func removeAnnotations() {
+        mapView.annotations.forEach { mapView.removeAnnotation($0)}
     }
     
     func searchBy(naturalLanguageQuery: String, region: MKCoordinateRegion, coordinates: CLLocationCoordinate2D, completion: @escaping (_ response: MKLocalSearch.Response?, _ error: NSError?) -> ()) {
@@ -154,7 +154,14 @@ extension MapViewController: CLLocationManagerDelegate {
 // MARK: - SliderDelegate
 
 extension MapViewController: SliderDelegate {
+    func cancelButtonTapped() {
+        removeAnnotations()
+    }
+    
     func handleSearch(by text: String) {
+        
+        removeAnnotations()
+        
         guard let coordinate = locationManager.location?.coordinate else { return }
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
         
@@ -162,9 +169,13 @@ extension MapViewController: SliderDelegate {
             
             guard let response = response else { return }
             
-            response.mapItems.forEach {print($0)}
+            response.mapItems.forEach {
+                let annotation = MKPointAnnotation()
+                annotation.title = $0.name
+                annotation.coordinate = $0.placemark.coordinate
+                self.mapView.addAnnotation(annotation)
+            }
             
-//            self.searchInputView.searchResults = response.mapItems
         }
     }
     

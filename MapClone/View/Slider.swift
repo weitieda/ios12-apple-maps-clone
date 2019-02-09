@@ -11,6 +11,7 @@ import UIKit
 protocol SliderDelegate {
     func animateTemperatureLabel(targetPosotion: CGFloat, targetHeight: SliderHeight)
     func handleSearch(by text: String)
+    func cancelButtonTapped()
 }
 
 enum SliderHeight {
@@ -28,7 +29,6 @@ class Slider: UIView {
     var delegate: SliderDelegate?
     
     var currentSliderHeight: SliderHeight = .low
-    
     
     let indicatorView: UIView = {
         let view = UIView()
@@ -84,6 +84,10 @@ class Slider: UIView {
         
         addSubview(searchBar)
         searchBar.anchor(top: indicatorView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 8, bottom: 0, right: 8), size: .init(width: 0, height: 50))
+        if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
+//            textfield.textColor = UIColor.blue
+            textfield.backgroundColor = UIColor.init(white: 0.3, alpha: 0.2)
+        }
         
         
         tableView.register(SearchCell.self, forCellReuseIdentifier: cellId)
@@ -146,6 +150,16 @@ class Slider: UIView {
             self.frame.origin.y = targetPosition
         }, completion: completion)
     }
+    
+    func dismissSearch() {
+        searchBar.endEditing(true)
+//        searchBar.showsCancelButton = false
+        
+        animateSlider(targetPosition: frame.height / 5 * 3) { (_) in
+            self.currentSliderHeight = .medium
+        }
+        delegate?.animateTemperatureLabel(targetPosotion: mediumPosition, targetHeight: .medium)
+    }
 }
 
 extension Slider: UITableViewDelegate, UITableViewDataSource {
@@ -159,6 +173,7 @@ extension Slider: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! SearchCell
         return cell
     }
+    
 }
 
 extension Slider: UISearchBarDelegate {
@@ -166,6 +181,8 @@ extension Slider: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else { return }
         delegate?.handleSearch(by: text)
+        dismissSearch()
+        searchBar.showsCancelButton = true
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -177,12 +194,8 @@ extension Slider: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.endEditing(true)
+        dismissSearch()
+        delegate?.cancelButtonTapped()
         searchBar.showsCancelButton = false
-        
-        animateSlider(targetPosition: frame.height / 5 * 3) { (_) in
-            self.currentSliderHeight = .medium
-        }
-        delegate?.animateTemperatureLabel(targetPosotion: mediumPosition, targetHeight: .medium)
     }
 }
