@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
 protocol SliderDelegate {
     func animateTemperatureLabel(targetPosotion: CGFloat, targetHeight: SliderHeight)
@@ -21,6 +23,10 @@ enum SliderHeight {
 }
 
 class Slider: UIView {
+    
+    var mapController: MapViewController?
+    
+    var searchResult = [MKMapItem]()
     
     lazy var highPosition: CGFloat = 60
     lazy var mediumPosition = frame.height / 5 * 3
@@ -50,9 +56,8 @@ class Slider: UIView {
     }()
     
     let cellId = "cellId"
-    let tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tb = UITableView()
-        tb.rowHeight = 72
         return tb
     }()
 
@@ -153,7 +158,6 @@ class Slider: UIView {
     
     func dismissSearch() {
         searchBar.endEditing(true)
-//        searchBar.showsCancelButton = false
         
         animateSlider(targetPosition: frame.height / 5 * 3) { (_) in
             self.currentSliderHeight = .medium
@@ -165,12 +169,22 @@ class Slider: UIView {
 extension Slider: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        guard let searchResults = searchResults else { return 0 }
-        return 0
+        return searchResult.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! SearchCell
+        
+        if let mVC = mapController {
+            cell.delegate = mVC
+        }
+        
+        cell.mapItem = searchResult[indexPath.row]
+        
         return cell
     }
     

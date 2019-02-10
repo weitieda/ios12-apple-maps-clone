@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 protocol SearchCellDelegate {
-    func distanceFromUser(location: CLLocation) -> CLLocationDistance?
+    func userDistance(from location: CLLocation) -> CLLocationDistance?
     func getDirections(forMapItem mapItem: MKMapItem)
 }
 
@@ -22,7 +22,16 @@ class SearchCell: UITableViewCell {
     
     var mapItem: MKMapItem? {
         didSet {
-            configureCell()
+            placeInfoLabel.text = mapItem?.name ?? "n/a"
+            
+            let distanceFormatter = MKDistanceFormatter()
+            distanceFormatter.unitStyle = .abbreviated
+            distanceFormatter.units = .metric
+            
+            guard let mapItemLocation = mapItem?.placemark.location else { return }
+            guard let distance = delegate?.userDistance(from: mapItemLocation) else {return}
+            let distanceAsString = distanceFormatter.string(fromDistance: distance)
+            distanceLabel.text = distanceAsString
         }
     }
     
@@ -38,36 +47,38 @@ class SearchCell: UITableViewCell {
         return button
     }()
     
-    lazy var imageContainerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .mainPink()
-        view.addSubview(locationImageView)
-        locationImageView.centerInSuperview()
-        locationImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        locationImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        return view
-    }()
     
-    let locationImageView: UIImageView = {
+    lazy var locationImageView: UIImageView = {
         let iv = UIImageView()
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFit
         iv.backgroundColor = .mainPink()
-        iv.image = #imageLiteral(resourceName: "baseline_location_on_white_24pt_3x")
+        iv.image = #imageLiteral(resourceName: "location-2x")
+        iv.sizeToFit()
         return iv
     }()
     
-    let locationTitleLabel: UILabel = {
+    let placeInfoLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         return label
     }()
     
-    let locationDistanceLabel: UILabel = {
+    let distanceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray
         return label
+    }()
+    
+    lazy var verticalStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [
+            placeInfoLabel,
+            distanceLabel
+            ])
+        sv.axis = .vertical
+        sv.spacing = 0
+        return sv
     }()
     
     // MARK: - Init
@@ -77,24 +88,17 @@ class SearchCell: UITableViewCell {
         
         selectionStyle = .none
         
-        addSubview(imageContainerView)
-        let dimension: CGFloat = 40
+//        contentView.backgroundColor = .red
         
-        imageContainerView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 8, bottom: 0, right: 0), size: .init(width: dimension, height: dimension))
-//        imageContainerView.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: dimension, height: dimension)
-        imageContainerView.layer.cornerRadius = dimension / 2
-        imageContainerView.centerY(in: self)
+        contentView.addSubview(locationImageView)
+        let dimension: CGFloat = 30
+        locationImageView.anchor(top: nil, leading: contentView.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 16, bottom: 0, right: 0), size: .init(width: dimension, height: dimension))
+        locationImageView.layer.cornerRadius = dimension / 2
+        locationImageView.centerY(in: contentView)
         
-        addSubview(locationTitleLabel)
-        locationTitleLabel.anchor(top: imageContainerView.topAnchor, leading: imageContainerView.rightAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 8, bottom: 0, right: 0))
-        
-        addSubview(locationDistanceLabel)
-        locationDistanceLabel.anchor(top: nil, leading: imageContainerView.rightAnchor, bottom: imageContainerView.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 8, bottom: 0, right: 0))
-        
-        addSubview(directionsButton)
-        let buttonDimension: CGFloat = 50
-        directionsButton.anchor(top: nil, leading: nil, bottom: nil, trailing: rightAnchor, padding: .init(top: 0, left: 0, bottom: 8, right: 0), size: .init(width: buttonDimension, height: buttonDimension))
-        directionsButton.centerY(in: self)
+        contentView.addSubview(verticalStackView)
+        verticalStackView.anchor(top: nil, leading: locationImageView.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 16, bottom: 0, right: 0))
+        verticalStackView.centerY(in: contentView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -119,18 +123,6 @@ class SearchCell: UITableViewCell {
         }) { (_) in
             self.directionsButton.transform = .identity
         }
-    }
-    
-    func configureCell() {
-        locationTitleLabel.text = mapItem?.name
-        
-        let distanceFormatter = MKDistanceFormatter()
-        distanceFormatter.unitStyle = .abbreviated
-        
-        guard let mapItemLocation = mapItem?.placemark.location else { return }
-        guard let distanceFromUser = delegate?.distanceFromUser(location: mapItemLocation) else { return }
-        let distanceAsString = distanceFormatter.string(fromDistance: distanceFromUser)
-        locationDistanceLabel.text = distanceAsString
     }
 }
 

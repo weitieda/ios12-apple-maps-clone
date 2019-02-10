@@ -75,6 +75,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func setupSlider() {
         view.addSubview(slider)
         slider.delegate = self
+        slider.mapController = self
         slider.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: view.frame.height - 80, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: view.frame.height))
         
         view.addSubview(compassButton)
@@ -175,7 +176,8 @@ extension MapViewController: SliderDelegate {
                 annotation.coordinate = $0.placemark.coordinate
                 self.mapView.addAnnotation(annotation)
             }
-            
+            self.slider.searchResult = response.mapItems
+            self.slider.tableView.reloadData()
         }
     }
     
@@ -197,6 +199,22 @@ extension MapViewController: SliderDelegate {
             temperatureLabel.isHidden = true
             self.temperatureLabel.frame.origin.y = y
         }
+    }
+    
+}
+
+extension MapViewController: SearchCellDelegate {
+    func userDistance(from location: CLLocation) -> CLLocationDistance? {
+        guard let userLocation = locationManager.location else {
+            return nil
+        }
+        let distance = userLocation.distance(from: location)
+        print(distance)
+        return distance
+    }
+    
+    func getDirections(forMapItem mapItem: MKMapItem) {
+        print()
     }
     
 }
