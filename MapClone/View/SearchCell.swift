@@ -11,12 +11,9 @@ import MapKit
 
 protocol SearchCellDelegate {
     func userDistance(from location: CLLocation) -> CLLocationDistance?
-    func getDirections(forMapItem mapItem: MKMapItem)
 }
 
 class SearchCell: UITableViewCell {
-    
-    // MARK: - Properties
     
     var delegate: SearchCellDelegate?
     
@@ -80,14 +77,10 @@ class SearchCell: UITableViewCell {
         return sv
     }()
     
-    // MARK: - Init
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
-        
-//        contentView.backgroundColor = .red
         
         contentView.addSubview(locationImageView)
         let dimension: CGFloat = 35
@@ -104,14 +97,10 @@ class SearchCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK - Selectors
     
     @objc func handleGetDirections() {
-        guard let mapItem = self.mapItem else { return }
-        delegate?.getDirections(forMapItem: mapItem)
+//        guard let mapItem = self.mapItem else { return }
     }
-    
-    // MARK: - Helper Functions
     
     func animateButtonIn() {
         directionsButton.transform = CGAffineTransform(scaleX: 0.25, y: 0.25)

@@ -49,9 +49,7 @@ class Slider: UIView {
         sb.placeholder = "Search for a place or address"
         sb.barStyle = .black
         sb.backgroundImage = UIImage()
-//        sb.backgroundColor = .red
         sb.delegate = self
-//        sb.barTintColor = .lightGray
         return sb
     }()
     
@@ -131,7 +129,6 @@ class Slider: UIView {
                     self.currentSliderHeight = .high
                 }
             }
-            
         } else if gesture.direction == .down {
             if currentSliderHeight == .medium {
                 delegate?.animateTemperatureLabel(targetPosotion: lowPosition, targetHeight: .low)
@@ -142,9 +139,7 @@ class Slider: UIView {
             if currentSliderHeight == .high {
                 self.searchBar.endEditing(true)
                 if let text = self.searchBar.text {
-                    if !text.isEmpty {
-                        self.searchBar.showsCancelButton = true
-                    }
+                    if !text.isEmpty {  self.searchBar.showsCancelButton = true }
                 }
                 delegate?.animateTemperatureLabel(targetPosotion: mediumPosition, targetHeight: .medium)
                 animateSlider(targetPosition: mediumPosition) { (_) in
@@ -159,7 +154,6 @@ class Slider: UIView {
             self.frame.origin.y = targetPosition
         }, completion: completion)
     }
-
 }
 
 extension Slider: UITableViewDelegate, UITableViewDataSource {
@@ -174,16 +168,16 @@ extension Slider: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! SearchCell
-        
-        if let mVC = mapController {
-            cell.delegate = mVC
-        }
-        
+        if let mVC = mapController { cell.delegate = mVC }
         cell.mapItem = searchResult[indexPath.row]
-        
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        animateSlider(targetPosition: mediumPosition) { (_) in
+            self.currentSliderHeight = .medium
+        }
+    }
 }
 
 extension Slider: UISearchBarDelegate {
@@ -212,7 +206,6 @@ extension Slider: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        dismissSearch()
         delegate?.cancelButtonTapped()
         searchBar.showsCancelButton = false
         searchBar.text = ""

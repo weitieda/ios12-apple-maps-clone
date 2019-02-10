@@ -11,8 +11,6 @@ import CoreLocation
 
 class LocationRequestController: UIViewController {
     
-    // MARK: - Properties
-    
     var locationManager: CLLocationManager?
     
     let imageView: UIImageView = {
@@ -24,11 +22,8 @@ class LocationRequestController: UIViewController {
     
     let allowLocationLabel: UILabel = {
         let label = UILabel()
-        
         let attributedText = NSMutableAttributedString(string: "Allow Location\n", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 24)])
-        
         attributedText.append(NSAttributedString(string: "Please enable location services so that we can track your movements", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)]))
-        
         label.numberOfLines = 0
         label.textAlignment = .center
         label.attributedText = attributedText
@@ -47,23 +42,17 @@ class LocationRequestController: UIViewController {
         return button
     }()
     
-    // MARK: - Init
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureViewComponents()
     }
     
-    // MARK: - Selectors
-    
     @objc func handleRequestLocation() {
         guard let locationManager = self.locationManager else { return }
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
     }
-    
-    // MARK: - Helper Functions
     
     func configureViewComponents() {
         view.backgroundColor = .white
@@ -91,6 +80,5 @@ extension LocationRequestController: CLLocationManagerDelegate {
         
         dismiss(animated: true, completion: nil)
     }
-    
 } 
 

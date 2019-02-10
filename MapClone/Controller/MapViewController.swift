@@ -12,11 +12,12 @@ import CoreLocation
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
-    let mapView: MKMapView = {
+    lazy var mapView: MKMapView = {
         let mv = MKMapView()
         mv.showsUserLocation = true
         mv.userTrackingMode = .follow
         mv.showsCompass = false
+        mv.delegate = self
         return mv
     }()
     
@@ -26,17 +27,27 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         return cb
     }()
     
-    let locationManager: CLLocationManager = {
-       let lm = CLLocationManager()
-       return lm
+    lazy var locationManager: CLLocationManager = {
+        let lm = CLLocationManager()
+        lm.delegate = self
+        return lm
     }()
     
     let slider = Slider()
     
     let centerMapButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "location-arrow-flat").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "arrow").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageView?.tintColor = .blue
+        button.backgroundColor = .white
         button.addTarget(self, action: #selector(handleCenterLocation), for: .touchUpInside)
+        button.layer.cornerRadius = 5
+        button.alpha = 0.8
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowRadius = 4
+        button.layer.shadowOpacity = 0.2
+        button.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        button.layer.masksToBounds = false
         return button
     }()
     
@@ -56,6 +67,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         setupCenterButton()
         setupSlider()
         setupTemperatureLabel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        centerMapOnUserLocation()
     }
     
     func setupTemperatureLabel() {
@@ -82,14 +99,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         compassButton.anchor(top: centerMapButton.bottomAnchor, leading: nil, bottom: nil, trailing: centerMapButton.trailingAnchor, padding: .init(top: 8, left: 0, bottom: 0, right: 0))
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        centerMapOnUserLocation()
-    }
-    
     func setupMapView() {
-        mapView.delegate = self
         view.addSubview(mapView)
         mapView.fillSuperview()
     }
@@ -105,54 +115,21 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func searchBy(naturalLanguageQuery: String, region: MKCoordinateRegion, coordinates: CLLocationCoordinate2D, completion: @escaping (_ response: MKLocalSearch.Response?, _ error: NSError?) -> ()) {
-        
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = naturalLanguageQuery
         request.region = region
         
         let search = MKLocalSearch(request: request)
         search.start { (response, error) in
-            
             guard let response = response else {
                 completion(nil, error! as NSError)
                 return
             }
-            
             completion(response, nil)
         }
     }
 }
 
-// MARK: - CLLocationManagerDelegate
-
-extension MapViewController: CLLocationManagerDelegate {
-    
-    func enableLocationServices() {
-        locationManager.delegate = self
-        
-        switch CLLocationManager.authorizationStatus() {
-        case .notDetermined:
-            print("Location auth status is NOT DETERMINED")
-            
-            DispatchQueue.main.async {
-                let controller = LocationRequestController()
-                controller.locationManager = self.locationManager
-                self.present(controller, animated: true, completion: nil)
-            }
-            
-        case .restricted:
-            print("Location auth status is RESTRICTED")
-        case .denied:
-            print("Location auth status is DENIED")
-        case .authorizedAlways:
-            print("Location auth status is AUTHORIZED ALWAYS")
-        case .authorizedWhenInUse:
-            print("Location auth status is AUTHORIZED WHEN IN USE")
-        }
-    }
-}
-
-// MARK: - SliderDelegate
 
 extension MapViewController: SliderDelegate {
     func cancelButtonTapped() {
@@ -167,9 +144,7 @@ extension MapViewController: SliderDelegate {
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
         
         searchBy(naturalLanguageQuery: text, region: region, coordinates: coordinate) { (response, error) in
-            
             guard let response = response else { return }
-            
             response.mapItems.forEach {
                 let annotation = MKPointAnnotation()
                 annotation.title = $0.name
@@ -200,22 +175,14 @@ extension MapViewController: SliderDelegate {
             self.temperatureLabel.frame.origin.y = y
         }
     }
-    
 }
 
 extension MapViewController: SearchCellDelegate {
     func userDistance(from location: CLLocation) -> CLLocationDistance? {
-        guard let userLocation = locationManager.location else {
-            return nil
-        }
+        guard let userLocation = locationManager.location else { return nil }
         let distance = userLocation.distance(from: location)
         return distance
     }
-    
-    func getDirections(forMapItem mapItem: MKMapItem) {
-        print()
-    }
-    
 }
 
 
