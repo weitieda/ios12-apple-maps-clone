@@ -209,7 +209,6 @@ extension MapViewController: SearchCellDelegate {
             return nil
         }
         let distance = userLocation.distance(from: location)
-        print(distance)
         return distance
     }
     

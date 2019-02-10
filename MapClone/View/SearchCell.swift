@@ -47,14 +47,13 @@ class SearchCell: UITableViewCell {
         return button
     }()
     
-    
     lazy var locationImageView: UIImageView = {
         let iv = UIImageView()
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFit
         iv.backgroundColor = .mainPink()
-        iv.image = #imageLiteral(resourceName: "location-2x")
-        iv.sizeToFit()
+        iv.tintColor = .white
+        iv.image = UIImage(named: "location4")?.withRenderingMode(.alwaysOriginal)
         return iv
     }()
     
@@ -91,7 +90,7 @@ class SearchCell: UITableViewCell {
 //        contentView.backgroundColor = .red
         
         contentView.addSubview(locationImageView)
-        let dimension: CGFloat = 30
+        let dimension: CGFloat = 35
         locationImageView.anchor(top: nil, leading: contentView.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 16, bottom: 0, right: 0), size: .init(width: dimension, height: dimension))
         locationImageView.layer.cornerRadius = dimension / 2
         locationImageView.centerY(in: contentView)

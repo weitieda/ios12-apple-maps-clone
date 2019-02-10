@@ -98,6 +98,7 @@ class Slider: UIView {
         tableView.register(SearchCell.self, forCellReuseIdentifier: cellId)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.keyboardDismissMode = .onDrag
         addSubview(tableView)
         tableView.anchor(top: searchBar.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 100, right: 0))
     }
@@ -116,7 +117,6 @@ class Slider: UIView {
     @objc func handleSwipe(gesture: UISwipeGestureRecognizer){
         if gesture.direction == .up {
             if currentSliderHeight == .low {
-                
                 
                 delegate?.animateTemperatureLabel(targetPosotion: mediumPosition, targetHeight: .medium)
                 
@@ -141,7 +141,11 @@ class Slider: UIView {
             }
             if currentSliderHeight == .high {
                 self.searchBar.endEditing(true)
-                self.searchBar.showsCancelButton = false
+                if let text = self.searchBar.text {
+                    if !text.isEmpty {
+                        self.searchBar.showsCancelButton = true
+                    }
+                }
                 delegate?.animateTemperatureLabel(targetPosotion: mediumPosition, targetHeight: .medium)
                 animateSlider(targetPosition: mediumPosition) { (_) in
                     self.currentSliderHeight = .medium
@@ -155,15 +159,7 @@ class Slider: UIView {
             self.frame.origin.y = targetPosition
         }, completion: completion)
     }
-    
-    func dismissSearch() {
-        searchBar.endEditing(true)
-        
-        animateSlider(targetPosition: frame.height / 5 * 3) { (_) in
-            self.currentSliderHeight = .medium
-        }
-        delegate?.animateTemperatureLabel(targetPosotion: mediumPosition, targetHeight: .medium)
-    }
+
 }
 
 extension Slider: UITableViewDelegate, UITableViewDataSource {
@@ -191,6 +187,14 @@ extension Slider: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension Slider: UISearchBarDelegate {
+    func dismissSearch() {
+        searchBar.endEditing(true)
+        
+        animateSlider(targetPosition: frame.height / 5 * 3) { (_) in
+            self.currentSliderHeight = .medium
+        }
+        delegate?.animateTemperatureLabel(targetPosotion: mediumPosition, targetHeight: .medium)
+    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else { return }
@@ -208,8 +212,11 @@ extension Slider: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        dismissSearch()
+//        dismissSearch()
         delegate?.cancelButtonTapped()
         searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchResult.removeAll()
+        tableView.reloadData()
     }
 }

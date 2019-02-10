@@ -9,25 +9,25 @@
 /* Begin PBXBuildFile section */
 		83420734220D3616008104AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83420733220D3616008104AF /* AppDelegate.swift */; };
 		83420736220D3616008104AF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83420735220D3616008104AF /* MapViewController.swift */; };
-		8342073B220D3619008104AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8342073A220D3619008104AF /* Assets.xcassets */; };
 		8342073E220D3619008104AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8342073C220D3619008104AF /* LaunchScreen.storyboard */; };
 		83420746220D3733008104AF /* Extention+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83420745220D3733008104AF /* Extention+UIView.swift */; };
 		83420750220D3D89008104AF /* LocationRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342074F220D3D89008104AF /* LocationRequestController.swift */; };
 		83420752220E6E53008104AF /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83420751220E6E53008104AF /* Slider.swift */; };
 		83420754220E7534008104AF /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83420753220E7534008104AF /* SearchCell.swift */; };
+		8342075622108429008104AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8342075522108429008104AF /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		83420730220D3616008104AF /* MapClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83420733220D3616008104AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83420735220D3616008104AF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		8342073A220D3619008104AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8342073D220D3619008104AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8342073F220D3619008104AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83420745220D3733008104AF /* Extention+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extention+UIView.swift"; sourceTree = "<group>"; };
 		8342074F220D3D89008104AF /* LocationRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestController.swift; sourceTree = "<group>"; };
 		83420751220E6E53008104AF /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
 		83420753220E7534008104AF /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		8342075522108429008104AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../../../.Trash/Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				8342073C220D3619008104AF /* LaunchScreen.storyboard */,
-				8342073A220D3619008104AF /* Assets.xcassets */,
+				8342075522108429008104AF /* Assets.xcassets */,
 				8342073F220D3619008104AF /* Info.plist */,
 				83420733220D3616008104AF /* AppDelegate.swift */,
 			);
@@ -171,8 +171,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8342075622108429008104AF /* Assets.xcassets in Resources */,
 				8342073E220D3619008104AF /* LaunchScreen.storyboard in Resources */,
-				8342073B220D3619008104AF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
