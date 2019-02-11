@@ -53,7 +53,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     let temperatureLabel: UILabel = {
         let lb = UILabel()
-        lb.backgroundColor = .red
+        lb.backgroundColor = .white
+        lb.layer.cornerRadius = 5
+        lb.clipsToBounds = true
+        lb.textAlignment = .center
+        lb.alpha = 0.8
         return lb
     }()
     
@@ -67,6 +71,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         setupCenterButton()
         setupSlider()
         setupTemperatureLabel()
+//        handleSearch(by: "IGA")
+        fetchWeatherData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,9 +81,34 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         centerMapOnUserLocation()
     }
     
+    func fetchWeatherData() {
+        
+        guard let coordinate = locationManager.location?.coordinate else { return }
+        
+        let urlString = Api.shared.formatUrlString(by: coordinate)
+        
+        guard let url = URL(string: urlString) else {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, _, err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            guard let data = data else {return}
+            do {
+                let weatherInfo = try JSONDecoder().decode(Weather.self, from: data)
+                DispatchQueue.main.async {
+                    self.temperatureLabel.text = String(format:"%.1f", weatherInfo.currently.temperature) + "º"
+                }
+            } catch let err {
+                print(err)
+            }
+        }.resume()
+    }
+    
     func setupTemperatureLabel() {
         view.addSubview(temperatureLabel)
-        temperatureLabel.anchor(top: nil, leading: nil, bottom: slider.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 8, right: 8), size: .init(width: 50, height: 20))
+        temperatureLabel.anchor(top: nil, leading: nil, bottom: slider.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 8, right: 8), size: .init(width: 60, height: 25))
     }
     
     func setupCenterButton() {
@@ -132,6 +163,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 
 extension MapViewController: SliderDelegate {
+    func didSelectMapItem(annotation: MKMapItem) {
+        mapView.annotations.forEach {
+            if annotation.name == $0.title {
+                mapView.selectAnnotation($0, animated: true)
+                mapView.setCenter($0.coordinate, animated: true)
+            }
+        }
+    }
+    
     func cancelButtonTapped() {
         removeAnnotations()
     }
@@ -161,7 +201,7 @@ extension MapViewController: SliderDelegate {
         
         switch targetHeight {
         case .low:
-            temperatureLabel.isHidden = false
+            showAccessoryButtons()
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.temperatureLabel.frame.origin.y = y
             })
@@ -169,11 +209,17 @@ extension MapViewController: SliderDelegate {
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.temperatureLabel.frame.origin.y = y
             })
-            self.temperatureLabel.isHidden = false
+            showAccessoryButtons()
         case .high:
             temperatureLabel.isHidden = true
+            centerMapButton.isHidden = true
             self.temperatureLabel.frame.origin.y = y
         }
+    }
+    
+    func showAccessoryButtons() {
+        temperatureLabel.isHidden = false
+        centerMapButton.isHidden = false
     }
 }
 

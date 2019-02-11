@@ -14,6 +14,7 @@ protocol SliderDelegate {
     func animateTemperatureLabel(targetPosotion: CGFloat, targetHeight: SliderHeight)
     func handleSearch(by text: String)
     func cancelButtonTapped()
+    func didSelectMapItem(annotation: MKMapItem)
 }
 
 enum SliderHeight {
@@ -174,6 +175,9 @@ extension Slider: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        delegate?.didSelectMapItem(annotation: searchResult[indexPath.row])
+        
         animateSlider(targetPosition: mediumPosition) { (_) in
             self.currentSliderHeight = .medium
         }
