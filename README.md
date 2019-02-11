@@ -1,6 +1,7 @@
 # MapClone
 
 Features:
+
 0. MapKit, CoreLocation
 1. Swipe Guesture to swipe search panel up and down
 2. Made Http request to Dark Sky api to get temperature data, parced json response and showed the result
