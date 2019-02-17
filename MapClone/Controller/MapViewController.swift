@@ -98,7 +98,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             do {
                 let weatherInfo = try JSONDecoder().decode(Weather.self, from: data)
                 DispatchQueue.main.async {
-                    self.temperatureLabel.text = String(format:"%.1f", weatherInfo.currently.temperature) + "º"
+                    self.temperatureLabel.text = String(format:"%.0f", weatherInfo.currently.temperature) + "º"
                 }
             } catch let err {
                 print(err)
@@ -213,6 +213,7 @@ extension MapViewController: SliderDelegate {
         case .high:
             temperatureLabel.isHidden = true
             centerMapButton.isHidden = true
+            compassButton.isHidden = true
             self.temperatureLabel.frame.origin.y = y
         }
     }
