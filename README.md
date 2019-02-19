@@ -2,6 +2,8 @@
 
 ##### Attempt to clone the original UI, UX and animation of iOS12 Apple Maps app
 
+https://giphy.com/gifs/5n9q1iy4mE0JEMoxkN
+
 ##### Features:
 1. Request permission to get user's location by `CoreLocation`
 2. Show user location on `MKMapView` from `MapKit`
