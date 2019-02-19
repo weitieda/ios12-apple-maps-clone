@@ -11,4 +11,4 @@
 6. User could search nearby places by using `MKLocalSearch` and `naturalLanguageQuery`
 7. Showed search results on customized cell `UITableView` with `annotations`
 8. Center each place `annotation` by clicking relevant cell
-9. Auto Layout UI programmatically 
+9. `Auto Layout` UI programmatically 
