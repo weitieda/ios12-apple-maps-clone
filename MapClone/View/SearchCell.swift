@@ -32,18 +32,6 @@ class SearchCell: UITableViewCell {
         }
     }
     
-    lazy var directionsButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.setTitle("Go", for: .normal)
-        button.backgroundColor = .directionsGreen()
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(handleGetDirections), for: .touchUpInside)
-        button.layer.cornerRadius = 5
-        button.alpha = 0
-        return button
-    }()
-    
     lazy var locationImageView: UIImageView = {
         let iv = UIImageView()
         iv.clipsToBounds = true
@@ -76,12 +64,16 @@ class SearchCell: UITableViewCell {
         sv.spacing = 0
         return sv
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
         
+        setupView()
+    }
+    
+    fileprivate func setupView() {
         contentView.addSubview(locationImageView)
         let dimension: CGFloat = 35
         locationImageView.anchor(top: nil, leading: contentView.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 16, bottom: 0, right: 0), size: .init(width: dimension, height: dimension))
@@ -95,22 +87,6 @@ class SearchCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-    @objc func handleGetDirections() {
-//        guard let mapItem = self.mapItem else { return }
-    }
-    
-    func animateButtonIn() {
-        directionsButton.transform = CGAffineTransform(scaleX: 0.25, y: 0.25)
-        
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-            self.directionsButton.alpha = 1
-            self.directionsButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-        }) { (_) in
-            self.directionsButton.transform = .identity
-        }
     }
 }
 
