@@ -1,6 +1,6 @@
 # iOS12 Apple Maps Clone
 
-### Some features:
+### Key features:
 1. `MapKit`, `CoreLocation`
 2. Swipe Guesture to swipe search panel up and down
 3. Made Http request to Dark Sky api to get temperature data, parced json response and showed the result
