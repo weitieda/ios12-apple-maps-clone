@@ -3,8 +3,10 @@
 ##### Attempt to clone the same UI, UX and animation of iOS12 Apple Maps app
 
 ##### Key features:
-1. Request permission to get user's location by `CoreLocation`
-2. Swipe Guesture to swipe search panel up and down
-3. Made Http request to Dark Sky api to get temperature data, parced json response and showed the result
-4. Implemented Delegation Pattern to achieve data flow bewtween controllers
-5. Nearby search and pin the result annotation; center selected result on the map
+1. Request permission to get user's location by `CoreLocation` and showed on `MKMapView` from `MapKit`
+2. Allow user to slide search panel up and down by `UISwipeGestureRecognizer`
+3. `Http` `GET` request to Dark Sky weather api to get current location weather data
+4. `JSON` parcing by `Codable` protocol 
+5. User could search nearby places by `MKLocalSearch`, 
+5. 
+Implemented Delegation and Singleton Design Pattern
