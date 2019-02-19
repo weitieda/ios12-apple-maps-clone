@@ -11,7 +11,7 @@
 4. `Http` `GET` request to Dark Sky weather api to get current location weather data
 5. `JSON` parcing by `Codable` protocol
 6. User could search nearby places by using `MKLocalSearch` and `naturalLanguageQuery`
-7. Showed search results on customized cell `UITableView` with `annotations`
+7. Showed search results on customized cell `UITableView` with `annotations`, and calculated distance from user location
 8. Center each place `annotation` by clicking relevant cell
 9. `Auto Layout` UI programmatically
 10. Implemented Delegation and Singleton Design Pattern
