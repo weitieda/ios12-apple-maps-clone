@@ -60,18 +60,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         lb.alpha = 0.8
         return lb
     }()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        
-        setupMapView()
         enableLocationServices()
-        setupCenterButton()
-        setupSlider()
-        setupTemperatureLabel()
-//        handleSearch(by: "IGA")
+        setupSubviews()
         fetchWeatherData()
     }
     
@@ -81,29 +76,27 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         centerMapOnUserLocation()
     }
     
+    fileprivate func setupSubviews() {
+        setupMapView()
+        setupCenterButton()
+        setupSlider()
+        setupTemperatureLabel()
+        setupCompassButton()
+    }
+    
     func fetchWeatherData() {
         
         guard let coordinate = locationManager.location?.coordinate else { return }
         
-        let urlString = Api.shared.formatUrlString(by: coordinate)
-        
-        guard let url = URL(string: urlString) else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, _, err) in
+        WeatherDataManager.shared.getWeatherDataAt(latitude: coordinate.latitude, longitude: coordinate.longitude) { (data, err) in
             if let err = err {
                 print(err)
-                return
-            }
-            guard let data = data else {return}
-            do {
-                let weatherInfo = try JSONDecoder().decode(Weather.self, from: data)
+            } else if let data = data {
                 DispatchQueue.main.async {
-                    self.temperatureLabel.text = String(format:"%.0f", weatherInfo.currently.temperature) + "º"
+                    self.temperatureLabel.text = String(format:"%.0f °C", data.currently.temperature.toCelsius())
                 }
-            } catch let err {
-                print(err)
             }
-        }.resume()
+        }
     }
     
     func setupTemperatureLabel() {
@@ -125,7 +118,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         slider.delegate = self
         slider.mapController = self
         slider.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: view.frame.height - 80, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: view.frame.height))
-        
+
+    }
+    
+    func setupCompassButton() {
         view.addSubview(compassButton)
         compassButton.anchor(top: centerMapButton.bottomAnchor, leading: nil, bottom: nil, trailing: centerMapButton.trailingAnchor, padding: .init(top: 8, left: 0, bottom: 0, right: 0))
     }

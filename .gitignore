@@ -79,4 +79,4 @@ iOSInjectionProject/
 
 
 # Key
-MapClone/Util/ApiKey.swift
+MapClone/Config/Key.swift
