@@ -14,3 +14,4 @@
 7. Showed search results on customized cell `UITableView` with `annotations`
 8. Center each place `annotation` by clicking relevant cell
 9. `Auto Layout` UI programmatically
+10. Implemented Delegation and Singleton Design Pattern
