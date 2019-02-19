@@ -2,7 +2,7 @@
 
 ##### Attempt to clone the original UI, UX and animation of iOS12 Apple Maps app
 
-![Alt Text](https://giphy.com/gifs/5n9q1iy4mE0JEMoxkN)
+![Alt Text](https://media.giphy.com/media/5n9q1iy4mE0JEMoxkN/giphy.gif)
 
 ##### Features:
 1. Request permission to get user's location by `CoreLocation`
