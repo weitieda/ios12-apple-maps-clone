@@ -35,6 +35,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     let slider = Slider()
     
+    let blurView = BlurView()
+    
     let centerMapButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "arrow").withRenderingMode(.alwaysTemplate), for: .normal)
@@ -78,10 +80,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     fileprivate func setupSubviews() {
         setupMapView()
+        setupBlurView()
         setupCenterButton()
         setupSlider()
         setupTemperatureLabel()
         setupCompassButton()
+    }
+    
+    func setupBlurView() {
+        view.addSubview(blurView)
+        blurView.fillSuperview()
+        blurView.isHidden = true
     }
     
     func fetchWeatherData() {
@@ -118,7 +127,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         slider.delegate = self
         slider.mapController = self
         slider.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: view.frame.height - 80, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: view.frame.height))
-
     }
     
     func setupCompassButton() {
@@ -210,6 +218,7 @@ extension MapViewController: SliderDelegate {
             temperatureLabel.isHidden = true
             centerMapButton.isHidden = true
             compassButton.isHidden = true
+            blurView.isHidden = false
             self.temperatureLabel.frame.origin.y = y
         }
     }
@@ -217,6 +226,7 @@ extension MapViewController: SliderDelegate {
     func showAccessoryButtons() {
         temperatureLabel.isHidden = false
         centerMapButton.isHidden = false
+        blurView.isHidden = true
     }
 }
 

@@ -21,6 +21,7 @@
 		839AE436221B8CC2000E7B17 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839AE435221B8CC2000E7B17 /* Config.swift */; };
 		839AE438221B8CD1000E7B17 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839AE437221B8CD1000E7B17 /* Key.swift */; };
 		839AE43A221B9456000E7B17 /* Extention+Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839AE439221B9456000E7B17 /* Extention+Double.swift */; };
+		839AE43C221C0898000E7B17 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839AE43B221C0898000E7B17 /* BlurView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		839AE435221B8CC2000E7B17 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		839AE437221B8CD1000E7B17 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		839AE439221B9456000E7B17 /* Extention+Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extention+Double.swift"; sourceTree = "<group>"; };
+		839AE43B221C0898000E7B17 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			children = (
 				83420751220E6E53008104AF /* Slider.swift */,
 				83420753220E7534008104AF /* SearchCell.swift */,
+				839AE43B221C0898000E7B17 /* BlurView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 				83420754220E7534008104AF /* SearchCell.swift in Sources */,
 				83420736220D3616008104AF /* MapViewController.swift in Sources */,
 				83420734220D3616008104AF /* AppDelegate.swift in Sources */,
+				839AE43C221C0898000E7B17 /* BlurView.swift in Sources */,
 				839AE43A221B9456000E7B17 /* Extention+Double.swift in Sources */,
 				83420746220D3733008104AF /* Extention+UIView.swift in Sources */,
 				83420752220E6E53008104AF /* Slider.swift in Sources */,
