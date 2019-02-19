@@ -1,4 +1,4 @@
-# MapClone
+# Apple Maps Clone
 
 ### Some features:
 1. `MapKit`, `CoreLocation`
