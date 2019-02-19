@@ -69,13 +69,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         enableLocationServices()
         setupSubviews()
-        fetchWeatherData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         centerMapOnUserLocation()
+        fetchWeatherData()
     }
     
     fileprivate func setupSubviews() {
