@@ -1,6 +1,6 @@
 # iOS12 Apple Maps Clone
 
-##### Attempt to clone the same UI, UX and animation of iOS12 Apple Maps app
+##### Attempt to clone the original UI, UX and animation of iOS12 Apple Maps app
 
 ##### Features:
 1. Request permission to get user's location by `CoreLocation`
