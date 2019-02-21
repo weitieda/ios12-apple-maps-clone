@@ -17,7 +17,7 @@
 1. Implemented Delegation and Singleton Design Pattern
 
 ## Installation
-Navigate to `Config` folder, create a file `Key.swift`, then build. You're good to go.
+Clone or download the project, navigate to `Config` folder, create a file `Key.swift`, then build. You're good to go.
 ```
 import Foundation
 
