@@ -15,3 +15,13 @@
 1. Center each place `annotation` by clicking relevant cell
 1. `Auto Layout` UI programmatically
 1. Implemented Delegation and Singleton Design Pattern
+
+## Installation
+Navigate to `Config` folder, create a file `Key.swift`, then build. You're good to go.
+```
+import Foundation
+
+enum Key: String {
+    case weatherApiKey = "YOUR_DARK_SKY_API_KEY"
+}
+```
