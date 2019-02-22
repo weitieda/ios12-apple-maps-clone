@@ -9,7 +9,7 @@
 1. Show user location on `MKMapView` from `MapKit`
 1. User could slide search panel up and down, achieved by `UISwipeGestureRecognizer`
 1. `Http` `GET` request to Dark Sky weather api to get current location weather data
-1. `JSON` parcing by `Codable` protocol
+1. `JSON` parsing by `Codable` protocol
 1. User could search nearby places by using `MKLocalSearch` and `naturalLanguageQuery`
 1. Showed search results on customized cell `UITableView` with `annotations`, and calculated distance from user location
 1. Center each place `annotation` by clicking relevant cell
