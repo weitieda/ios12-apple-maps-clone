@@ -8,7 +8,7 @@
 1. Request permission to get user's location by `CoreLocation` and show user location on `MKMapView` from `MapKit`
 1. Snapping behavior of search panel to top, middle and bottom position
 1. `Http` `GET` request to Dark Sky weather api, and `JSON` parsing by `Codable` protocol
-1. User could search nearby places by using `MKLocalSearch` and `naturalLanguageQuery`
+1. Search nearby places by `MKLocalSearch` and `naturalLanguageQuery`
 1. Showed search results on customized cell `UITableView` with `annotations`, and calculated distance from user location
 1. Center each place `annotation` by clicking relevant cell
 1. `Auto Layout` UI programmatically
