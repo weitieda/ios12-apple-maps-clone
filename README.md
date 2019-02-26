@@ -1,6 +1,6 @@
 # iOS12 Apple Maps Clone
 
-### Attempt to clone the original UI, UX and animation of iOS12 Apple Maps app
+### Attempt to clone the original UI and animation of iOS12 Apple Maps app
 ![Alt Text](https://media.giphy.com/media/5n9q1iy4mE0JEMoxkN/giphy.gif) 
 ![Alt Text](https://media.giphy.com/media/5wFUxlmrZnd1D2SR5G/giphy.gif)
 ![3](https://user-images.githubusercontent.com/35972055/53013491-eefb9980-3413-11e9-9f78-0f0c1a40bdff.gif)
